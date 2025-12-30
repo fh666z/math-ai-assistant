@@ -2,7 +2,8 @@ import re
 from langchain_core.tools import tool
 
 # List of tools exported by this module
-__all__ = ["add_numbers", "sum_decimal_numbers", "sum_numbers_from_text"]
+__all__ = ["add_numbers", "sum_decimal_numbers", "sum_numbers_from_text", 
+    "multiply_numbers", "divide_numbers", "subtract_numbers"]
 
 
 @tool
@@ -56,3 +57,126 @@ def sum_numbers_from_text(inputs: str) -> float:
     result = sum(numbers)
     return result
 
+@tool
+def subtract_numbers(inputs: str) -> dict:
+    """
+    Extracts numbers from a string, negates the first number, and successively subtracts 
+    the remaining numbers in the list.
+
+    This function is designed to handle input in string format, where numbers are separated 
+    by spaces, commas, or other delimiters. It parses the string, extracts valid numeric values, 
+    and performs a step-by-step subtraction operation starting with the first number negated.
+
+    Parameters:
+    - inputs (str): 
+      A string containing numbers to subtract. The string may include spaces, commas, or 
+      other delimiters between the numbers.
+
+    Returns:
+    - dict: 
+      A dictionary containing the key "result" with the calculated difference as its value. 
+      If no valid numbers are found in the input string, the result defaults to 0.
+
+    Example Input:
+    "100, 20, 10"
+
+    Example Output:
+    {"result": -130}
+
+    Notes:
+    - Non-numeric characters in the input are ignored.
+    - If the input string contains only one valid number, the result will be that number negated.
+    - Handles a variety of delimiters (e.g., spaces, commas) but does not validate input formats 
+      beyond extracting numeric values.
+    """
+    # Extract numbers from the string
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+
+    # If no numbers are found, return 0
+    if not numbers:
+        return {"result": 0}
+
+    # Start with the first number negated
+    result = numbers[0]
+
+    # Subtract all subsequent numbers
+    for num in numbers[1:]:
+        result -= num
+
+    return {"result": result}
+
+# Multiplication Tool
+@tool
+def multiply_numbers(inputs: str) -> dict:
+    """
+    Extracts numbers from a string and calculates their product.
+
+    Parameters:
+    - inputs (str): A string containing numbers separated by spaces, commas, or other delimiters.
+
+    Returns:
+    - dict: A dictionary with the key "result" containing the product of the numbers.
+
+    Example Input:
+    "2, 3, 4"
+
+    Example Output:
+    {"result": 24}
+
+    Notes:
+    - If no numbers are found, the result defaults to 1 (neutral element for multiplication).
+    """
+    # Extract numbers from the string
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+    print(numbers)
+
+    # If no numbers are found, return 1
+    if not numbers:
+        return {"result": 1}
+
+    # Calculate the product of the numbers
+    result = 1
+    for num in numbers:
+        result *= num
+        print(num)
+
+    return {"result": result}
+
+
+# Division Tool
+@tool
+def divide_numbers(inputs: str) -> dict:
+    """
+    Extracts numbers from a string and calculates the result of dividing the first number 
+    by the subsequent numbers in sequence.
+
+    Parameters:
+    - inputs (str): A string containing numbers separated by spaces, commas, or other delimiters.
+
+    Returns:
+    - dict: A dictionary with the key "result" containing the quotient.
+
+    Example Input:
+    "100, 5, 2"
+
+    Example Output:
+    {"result": 10.0}
+
+    Notes:
+    - If no numbers are found, the result defaults to 0.
+    - Division by zero will raise an error.
+    """
+    # Extract numbers from the string
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+
+
+    # If no numbers are found, return 0
+    if not numbers:
+        return {"result": 0}
+
+    # Calculate the result of dividing the first number by subsequent numbers
+    result = numbers[0]
+    for num in numbers[1:]:
+        result /= num
+
+    return {"result": result}
