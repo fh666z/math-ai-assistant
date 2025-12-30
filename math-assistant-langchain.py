@@ -1,6 +1,5 @@
 import os, re
 from math_functions import add_numbers, sum_decimal_numbers
-from langchain_core.tools import tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import initialize_agent
 

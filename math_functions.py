@@ -3,7 +3,7 @@ from langchain_core.tools import tool
 
 # List of tools exported by this module
 __all__ = ["add_numbers", "sum_decimal_numbers", "sum_numbers_from_text", 
-    "multiply_numbers", "divide_numbers", "subtract_numbers"]
+    "multiply_numbers", "divide_numbers", "subtract_numbers", "calculate_power"]
 
 
 @tool
@@ -180,3 +180,32 @@ def divide_numbers(inputs: str) -> dict:
         result /= num
 
     return {"result": result}
+
+
+@tool
+def calculate_power(inputs: str) -> dict:
+    """
+    Extracts numbers from a string and calculates the power of the first number to the second number.
+
+    Parameters:
+    - inputs (str): A string containing numbers separated by spaces, commas, or other delimiters.
+
+    Returns:
+    - dict: A dictionary with the key "result" containing the power of the first number to the second number.
+
+    Example Input:
+    "2, 3"
+
+    Example Output:
+    {"result": 8}
+
+    Notes:
+    - If no numbers are found, the result defaults to 0.
+    - The first number is the base and the second number is the exponent.
+    """
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+    if not numbers:
+        return {"result": 0}
+    result = numbers[0] ** numbers[1]
+    return {"result": result}
+

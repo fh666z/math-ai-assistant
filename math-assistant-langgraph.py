@@ -23,7 +23,7 @@ math_agent = create_react_agent(
     # Optional: Add a system message to guide the agent's behavior
     prompt="You are a helpful mathematical assistant that can perform various operations. Use the tools precisely and explain your reasoning clearly."
 )
-"""
+
 print("\n--- Testing DivideTool ---")
 response = math_agent.invoke({
     "messages": [("human", "What is 25 divided by 4?")]
@@ -59,7 +59,7 @@ response = math_agent.invoke({
     "messages": [("human", "Divide 100 by 5 and then by 2.")]
 })
 print("Agent Response:", response["messages"][-1].content)
-"""
+
 
 
 # Test Cases
