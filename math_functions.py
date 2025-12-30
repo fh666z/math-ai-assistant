@@ -2,7 +2,7 @@ import re
 from langchain_core.tools import tool
 
 # List of tools exported by this module
-__all__ = ["add_numbers", "sum_decimal_numbers"]
+__all__ = ["add_numbers", "sum_decimal_numbers", "sum_numbers_from_text"]
 
 
 @tool
@@ -39,4 +39,20 @@ def sum_decimal_numbers(text: str) -> str:
         return f"The sum is {total}"
     except Exception as e:
         return f"Error during summation: {str(e)}"
+
+@tool
+def sum_numbers_from_text(inputs: str) -> float:
+    """
+    Adds a list of numbers provided in the input string.
+    
+    Args:
+        text: A string containing numbers that should be extracted and summed.
+        
+    Returns:
+        The sum of all numbers found in the input.
+    """
+    # Use regular expressions to extract all numbers from the input
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
+    result = sum(numbers)
+    return result
 
