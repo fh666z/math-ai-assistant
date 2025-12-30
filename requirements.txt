@@ -2,5 +2,6 @@ langchain==0.3.23
 langchain-google-genai==2.0.0
 langchain-core
 langchain-community==0.3.16
+langgraph==0.6.1
 wikipedia==1.4.0
 google-genai
