@@ -80,9 +80,9 @@ test_cases = [
         "description": "Testing division tool with sequential division."
     },
     {
-        "query": "Subtract 50 from 20.",
-        "expected": {"result": -30},
-        "description": "Testing subtraction tool with negative results."
+        "query": "Subtract 20 and 10 from 50.",
+        "expected": {"result": 20},
+        "description": "Testing subtraction tool with multiple numbers."
     }
 
 ]

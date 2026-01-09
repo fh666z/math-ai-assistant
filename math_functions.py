@@ -47,7 +47,7 @@ def sum_numbers_from_text(inputs: str) -> float:
     Adds a list of numbers provided in the input string.
     
     Args:
-        text: A string containing numbers that should be extracted and summed.
+        inputs: A string containing numbers that should be extracted and summed.
         
     Returns:
         The sum of all numbers found in the input.
@@ -60,12 +60,10 @@ def sum_numbers_from_text(inputs: str) -> float:
 @tool
 def subtract_numbers(inputs: str) -> dict:
     """
-    Extracts numbers from a string, negates the first number, and successively subtracts 
-    the remaining numbers in the list.
+    Extracts numbers from a string and performs sequential subtraction starting from the first number.
 
-    This function is designed to handle input in string format, where numbers are separated 
-    by spaces, commas, or other delimiters. It parses the string, extracts valid numeric values, 
-    and performs a step-by-step subtraction operation starting with the first number negated.
+    This function parses the input string, extracts valid numeric values, and subtracts each 
+    subsequent number from the running result (starting with the first number).
 
     Parameters:
     - inputs (str): 
@@ -81,11 +79,11 @@ def subtract_numbers(inputs: str) -> dict:
     "100, 20, 10"
 
     Example Output:
-    {"result": -130}
+    {"result": 70}
 
     Notes:
     - Non-numeric characters in the input are ignored.
-    - If the input string contains only one valid number, the result will be that number negated.
+    - If the input string contains only one valid number, the result will be that number.
     - Handles a variety of delimiters (e.g., spaces, commas) but does not validate input formats 
       beyond extracting numeric values.
     """
@@ -96,7 +94,7 @@ def subtract_numbers(inputs: str) -> dict:
     if not numbers:
         return {"result": 0}
 
-    # Start with the first number negated
+    # Start with the first number
     result = numbers[0]
 
     # Subtract all subsequent numbers
@@ -128,7 +126,6 @@ def multiply_numbers(inputs: str) -> dict:
     """
     # Extract numbers from the string
     numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
-    print(numbers)
 
     # If no numbers are found, return 1
     if not numbers:
@@ -138,7 +135,6 @@ def multiply_numbers(inputs: str) -> dict:
     result = 1
     for num in numbers:
         result *= num
-        print(num)
 
     return {"result": result}
 
@@ -200,12 +196,12 @@ def calculate_power(inputs: str) -> dict:
     {"result": 8}
 
     Notes:
-    - If no numbers are found, the result defaults to 0.
+    - If fewer than two numbers are found, returns an error message.
     - The first number is the base and the second number is the exponent.
     """
     numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
-    if not numbers:
-        return {"result": 0}
+    if len(numbers) < 2:
+        return {"error": "Need exactly two numbers: base and exponent", "result": 0}
     result = numbers[0] ** numbers[1]
     return {"result": result}
 
